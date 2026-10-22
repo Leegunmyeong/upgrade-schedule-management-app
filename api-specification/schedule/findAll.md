@@ -39,7 +39,7 @@
 
 | 이름         | 데이터타입 | 설명                                |
 |--------------|------------|-------------------------------------|
-| Content-Type | String     | 요청 데이터 형식 (application/json) |
+| Content-Type | String     | 응답 데이터 형식 (application/json) |
 
 ## b. Response body
 
