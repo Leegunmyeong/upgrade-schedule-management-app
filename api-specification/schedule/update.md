@@ -65,7 +65,7 @@ PATCH http://localhost:8080/schedules/1
 
 ## b. Response body
 
-** 성공 응답: 200 OK**
+**성공 응답: 200 OK**
 
 ```json
 {
