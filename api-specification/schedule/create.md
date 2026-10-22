@@ -41,7 +41,7 @@
 |--------|----------|------------|-------------|
 | name   | Y        | String     | 작성자 이름 |
 | title  | Y        | String     | 일정 제목   |
-| detail | Y        | String     | 할일 내용   |
+| detail | Y        | String     | 일정 내용   |
 
 ## 3. 응답(Response) 
 
