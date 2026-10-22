@@ -55,7 +55,7 @@
 
 ## b. Response body
 
-** 성공 응답: 201 Created**
+**성공 응답: 201 Created**
 
 ```json
 {
