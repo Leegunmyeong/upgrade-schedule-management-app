@@ -13,15 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
-    // 일정 생성
+    // 일정 생성 기능
     @Transactional
     public ScheduleCreateResponseDto createdSchedule(ScheduleCreateRequestDto requestDto) {
+        // 1. Request DTO에 담긴 값으로 Schedule 객체 생성
         Schedule schedule = new Schedule(
                 requestDto.getName(),
                 requestDto.getTitle(),
                 requestDto.getDetail()
         );
+        // 2. Repository에 Schedule 객체 저장 요청
+        // save()의 반환 타입도 Schedule이므로 Schedule 변수로 받음
         Schedule savedSchedule = scheduleRepository.save(schedule);
+        // 3. 저장한 Schedule 객체에서 필요한 값을 꺼내 Response DTO 생성
         ScheduleCreateResponseDto responseDto = new ScheduleCreateResponseDto(
                 savedSchedule.getId(),
                 savedSchedule.getName(),
@@ -30,6 +34,7 @@ public class ScheduleService {
                 savedSchedule.getCreatedAt(),
                 savedSchedule.getUpdatedAt()
         );
+        // 4. 생성한 Response DTO를 Controller에 반환
         return responseDto;
     }
 
