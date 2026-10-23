@@ -1,5 +1,6 @@
 package com.upgradedschedulemanagementapp.service;
 
+import com.upgradedschedulemanagementapp.dto.GetOneScheduleResponseDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateRequestDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateResponseDto;
 import com.upgradedschedulemanagementapp.entity.Schedule;
@@ -39,6 +40,28 @@ public class ScheduleService {
     }
 
     // 일정 단건 조회
+    @Transactional
+    public GetOneScheduleResponseDto getOneSchedule(Long id) {
+        // 1. Repository에 일정 ID를 전달하여 조회 요청
+        // findById()는 Optional<Schedule>을 반환한다
+        // 일정이 존재하면 Schedule 객체를 꺼내고
+        // 존재하지 않으면 orElseThrow()로 예외를 발생시킨다
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("없는 일정 입니다.")
+        );
+        // 2. 조회된 Schedule Entity에서 필요한 값을 가져와 Response DTO 생성
+        GetOneScheduleResponseDto responseDto = new GetOneScheduleResponseDto(
+                schedule.getId(),
+                schedule.getName(),
+                schedule.getTitle(),
+                schedule.getDetail(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt()
+        );
+        // 3. 생성한 Response DTO를 Controller에 반환
+        return responseDto;
+    }
+
 
     // 일정 전체 조회
 
