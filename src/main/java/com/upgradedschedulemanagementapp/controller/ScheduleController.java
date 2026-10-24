@@ -76,5 +76,15 @@ public class ScheduleController {
         // 4. 클라이언트에게 HTTP 응답 반환
         return response;
     }
+
     // 일정 삭제
+    @DeleteMapping("/{scheduleId}")
+    public ResponseEntity<Void> deletedSchedule(@PathVariable Long scheduleId) {
+        // 1. Service에게 URL에서 전달 받은 삭제할 ID 전달
+        scheduleService.deletedSchedule(scheduleId);
+        // 2. HTTP 204 No Content 응답 생성 (Body 없음)
+        ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        // 3. 클라이언트에게 반환
+        return response;
+    }
 }
