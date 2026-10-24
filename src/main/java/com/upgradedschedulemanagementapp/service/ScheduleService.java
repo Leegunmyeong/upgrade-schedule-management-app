@@ -1,14 +1,16 @@
 package com.upgradedschedulemanagementapp.service;
 
-import com.upgradedschedulemanagementapp.dto.GetOneScheduleResponseDto;
-import com.upgradedschedulemanagementapp.dto.ScheduleCreateRequestDto;
-import com.upgradedschedulemanagementapp.dto.ScheduleCreateResponseDto;
+import com.upgradedschedulemanagementapp.dto.*;
 import com.upgradedschedulemanagementapp.entity.Schedule;
 import com.upgradedschedulemanagementapp.exception.ScheduleNotFoundException;
 import com.upgradedschedulemanagementapp.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +67,39 @@ public class ScheduleService {
 
 
     // 일정 전체 조회
+    @Transactional(readOnly = true)
+    public ScheduleListResponseDto getAllSchedules() {
+
+        // 1. 수정일(updateAt) 기준 내림차순으로 전체 일정 조회
+        // Sort.by(): 어떤 필드를 기준으로 정렬할지 지정
+        // Sort.Direction.DESC: 내림차순(최신 -> 오래된 순서)
+        // "updatedAt": 정렬 기준이 되는 Entity 필드 이름
+        List<Schedule> scheduleList =
+                scheduleRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"));
+
+        // 2. 조회한 일정들을 DTO로 변환하여 DTO 타입으로 저장할 빈 리스트 생성
+        List<ScheduleDTO> scheduleDtoList = new ArrayList<>();
+
+        // 3. 조회한 일정들이 담겨있는 scheduleList을 for문을 사용해서
+        // 하나씩 꺼내기
+        for (Schedule schedule : scheduleList) {
+            // 4. Schedule Entity의 정보를 ScheduleDTO에 담기
+            ScheduleDTO scheduleDTO = new ScheduleDTO(
+                    schedule.getId(),
+                    schedule.getName(),
+                    schedule.getTitle(),
+                    schedule.getDetail(),
+                    schedule.getCreatedAt(),
+                    schedule.getUpdatedAt()
+            );
+            // 5. 생성한 DTO를 리스트에 추가
+            scheduleDtoList.add(scheduleDTO);
+        }
+        // 6. DTO 목록을 반환할 Response DTO에 담기
+        ScheduleListResponseDto scheduleListResponseDto = new ScheduleListResponseDto(scheduleDtoList);
+        // 7. Controller에게 결과 반환
+        return scheduleListResponseDto;
+    }
 
     // 일정 수정
 
