@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.sql.rowset.serial.SerialException;
 
 // 애플리케이션에서 발생하는 에외를 공통으로 처리
 @RestControllerAdvice
