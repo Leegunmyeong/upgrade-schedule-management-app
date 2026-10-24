@@ -1,9 +1,6 @@
 package com.upgradedschedulemanagementapp.controller;
 
-import com.upgradedschedulemanagementapp.dto.GetOneScheduleResponseDto;
-import com.upgradedschedulemanagementapp.dto.ScheduleCreateRequestDto;
-import com.upgradedschedulemanagementapp.dto.ScheduleCreateResponseDto;
-import com.upgradedschedulemanagementapp.dto.ScheduleListResponseDto;
+import com.upgradedschedulemanagementapp.dto.*;
 import com.upgradedschedulemanagementapp.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -67,8 +64,17 @@ public class ScheduleController {
         return response;
     }
 
-
     // 일정 수정
+    @PatchMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleUpdateResponseDto> updatedSchedule(@RequestBody ScheduleUpdateRequestDto request, @PathVariable Long scheduleId) {
+        // 1. Service에게 수정할 일정 ID, 수정 데이터 전달
+        // 2. Service에서 반환한 Response DTO를 변수에 저장
+        ScheduleUpdateResponseDto responseDto = scheduleService.updatedSchedule(request, scheduleId);
 
+        // 3. HTTP 200 OK와 Response DTO를 담아 응답 객체 생성
+        ResponseEntity<ScheduleUpdateResponseDto> response = new ResponseEntity<>(responseDto, HttpStatus.OK);
+        // 4. 클라이언트에게 HTTP 응답 반환
+        return response;
+    }
     // 일정 삭제
 }
