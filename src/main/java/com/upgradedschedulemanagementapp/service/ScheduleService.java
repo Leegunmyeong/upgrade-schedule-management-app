@@ -130,4 +130,14 @@ public class ScheduleService {
     }
 
     // 일정 삭제
+    @Transactional
+    public void deletedSchedule(Long id) {
+        // 1. scheduleId를 사용해서 삭제할 일정 조회
+        // 2. 일정이 없으면 ScheduleNotFoundException 발생
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(
+                () -> new ScheduleNotFoundException("없는 일정 입니다.")
+        );
+        // 3. 조회한 Schedule Entity 삭제
+        scheduleRepository.delete(schedule);
+    }
 }
