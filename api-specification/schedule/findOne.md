@@ -81,7 +81,6 @@ GET http://localhost:8080/schedules/1
 
 ```json
 {
-  "message": "schedule not found",
-  "status": 404
+  "message": "없는 일정 입니다."
 }
 ```
