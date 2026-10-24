@@ -1,6 +1,7 @@
 - **domain:** schedule
 - **URL:** `http://localhost:8080/schedules/{scheduleId}`
 - **method:** `PATCH`
+- **인증/인가:** 없음
 
 # 1. 설명
 
@@ -8,7 +9,7 @@
 
 기존 일정의 제목 또는 내용을 수정하는 API입니다.
 - 수정할 일정 ID는 URL에 입력합니다.
-- 제목과 내용 중 하나 이상 입력해야 합니다.
+- 제목과 내용은 각각 선택적으로 수정할 수 있습니다.
 - 입력하지 않은 항목은 기존 값을 유지합니다.
 - 수정하면 수정일은 자동으로 변경 됩니다.
 - 빈 문자열을 전달하면 해당 필드가 빈 문자열로 변경 됩니다.
@@ -37,6 +38,13 @@ PATCH http://localhost:8080/schedules/1
 
 ## c. Request Body
 
+제목과 내용 둘 중 하나만 적었을때 
+```json
+{
+  "title": "Spring 공부"
+}
+```
+둘다 적었을 때
 ```json
 {
   "title": "Spring 공부",
@@ -51,7 +59,7 @@ PATCH http://localhost:8080/schedules/1
 | title  | N        | String     | 수정할 일정 제목 |
 | detail | N        | String     | 수정할 일정 내용 |
 
-**title과 detail 중 최소 하나는 입력해야합니다**
+**title과 detail은 모두 선택 입력입니다**
 **그 외에 데이터는 수정할 수 없습니다**
 
 ## 3. 응답(Response)
@@ -68,16 +76,8 @@ PATCH http://localhost:8080/schedules/1
 
 **성공 응답: 200 OK**
 
-```json
-{
-  "id": 1,
-  "name": "홍길동",
-  "title": "Spring 공부",
-  "detail": "일정 수정 API 구현하기",
-  "createdAt": "2026-10-21T09:00:00",
-  "updatedAt": "2026-10-21T09:00:00"
-}
-```
+기존 일정의 제목이 "Java 공부", 내용이 "일정 관리 앱 과제 진행"일 때 제목만 수정한 결과입니다.
+
 변환 후
 
 ```json
@@ -105,7 +105,7 @@ PATCH http://localhost:8080/schedules/1
 
 ## 에러 응답
 
-**자원 없음: 404 Not Found**
+**수정할 일정을 찾을 수 없음: 404 Not Found**
 
 수정할 일정이 존재하지 않는 경우입니다.
 
