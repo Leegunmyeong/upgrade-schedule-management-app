@@ -1,6 +1,7 @@
 - **domain:** schedule
 - **URL:** `http://localhost:8080/schedules/{scheduleId}`
 - **method:** `GET`
+- **인증/인가:** 없음
 
 # 1. 설명
 
@@ -75,7 +76,7 @@ GET http://localhost:8080/schedules/1
 
 
 ## 에러 응답
-**잘못된 요청: 404 Not Found**
+**일정을 찾을 수 없음: 404 Not Found**
 
 요청한 일정이 존재하지 않는 경우입니다.
 
