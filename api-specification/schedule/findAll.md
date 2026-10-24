@@ -1,6 +1,7 @@
 - **domain:** schedule
 - **URL:** `http://localhost:8080/schedules`
 - **method:** `GET`
+- **인증/인가:** 없음
 
 # 1. 설명
 
