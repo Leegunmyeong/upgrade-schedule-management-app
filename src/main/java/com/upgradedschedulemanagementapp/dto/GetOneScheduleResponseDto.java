@@ -1,5 +1,6 @@
 package com.upgradedschedulemanagementapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,9 @@ public class GetOneScheduleResponseDto {
     private final String name;
     private final String title;
     private final String detail;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private final LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private final LocalDateTime updatedAt;
 
     public GetOneScheduleResponseDto(Long id, String name, String title, String detail, LocalDateTime createdAt, LocalDateTime updatedAt) {
