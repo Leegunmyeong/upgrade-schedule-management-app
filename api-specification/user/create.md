@@ -72,7 +72,7 @@
 |-----------|-------------|-------------------------------|
 | id        | Long        | 유저 식별자                   |
 | name      | String      | 유저명                        |
-| email     | String      | 이메일                        |
+| email     | String      | 유저 이메일                   |
 | createdAt | String      | 작성일(yyyy-MM-dd'T'HH:mm:ss) |
 | updatedAt | String      | 수정일(yyyy-MM-dd'T'HH:mm:ss) |
 
