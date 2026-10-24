@@ -79,8 +79,6 @@ GET http://localhost:8080/schedules/1
 
 요청한 일정이 존재하지 않는 경우입니다.
 
-```json
-{
-  "message": "없는 일정 입니다."
-}
+```text
+없는 일정 입니다.
 ```
