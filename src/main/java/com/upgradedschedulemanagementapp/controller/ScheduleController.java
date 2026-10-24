@@ -3,6 +3,7 @@ package com.upgradedschedulemanagementapp.controller;
 import com.upgradedschedulemanagementapp.dto.GetOneScheduleResponseDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateRequestDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateResponseDto;
+import com.upgradedschedulemanagementapp.dto.ScheduleListResponseDto;
 import com.upgradedschedulemanagementapp.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,19 @@ public class ScheduleController {
     }
 
     // 일정 전체 조회
+    @GetMapping
+    public ResponseEntity<ScheduleListResponseDto> getAllSchedules() {
+        // 1. Service에 전체 일정 조회 요청
+        // 2. Service에서 반환한 Response DTO를 변수에 저장
+        ScheduleListResponseDto responseDto = scheduleService.getAllSchedules();
+
+        // 3. HTTP 200 OK와 Response DTO를 담아 응답 생성
+        ResponseEntity<ScheduleListResponseDto> response = new ResponseEntity<>(responseDto, HttpStatus.OK);
+
+        // 4. 클라이언트에게 반환
+        return response;
+    }
+
 
     // 일정 수정
 
