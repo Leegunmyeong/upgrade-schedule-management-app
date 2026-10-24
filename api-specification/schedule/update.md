@@ -87,7 +87,7 @@ PATCH http://localhost:8080/schedules/1
   "title": "Spring 공부",
   "detail": "일정 관리 앱 과제 진행",
   "createdAt": "2026-10-21T09:00:00",
-  "updatedAt": "2026-10-21T09:00:00"
+  "updatedAt": "2026-10-21T10:00:00"
 }
 ```
 
