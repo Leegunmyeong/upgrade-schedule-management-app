@@ -40,7 +40,7 @@ public class ScheduleService {
     }
 
     // 일정 단건 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public GetOneScheduleResponseDto getOneSchedule(Long id) {
         // 1. Repository에 일정 ID를 전달하여 조회 요청
         // findById()는 Optional<Schedule>을 반환한다
