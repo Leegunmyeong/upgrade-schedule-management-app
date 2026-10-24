@@ -87,7 +87,7 @@
 
 ```json
 {
-  "message": "invalid schedule request",
+  "message": "Bad Request",
   "status": 400
 }
 ```
