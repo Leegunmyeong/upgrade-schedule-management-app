@@ -4,6 +4,7 @@ import com.upgradedschedulemanagementapp.dto.GetOneScheduleResponseDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateRequestDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateResponseDto;
 import com.upgradedschedulemanagementapp.entity.Schedule;
+import com.upgradedschedulemanagementapp.exception.ScheduleNotFoundException;
 import com.upgradedschedulemanagementapp.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class ScheduleService {
         // 일정이 존재하면 Schedule 객체를 꺼내고
         // 존재하지 않으면 orElseThrow()로 예외를 발생시킨다
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("없는 일정 입니다.")
+                () -> new ScheduleNotFoundException("없는 일정 입니다.")
         );
         // 2. 조회된 Schedule Entity에서 필요한 값을 가져와 Response DTO 생성
         GetOneScheduleResponseDto responseDto = new GetOneScheduleResponseDto(
