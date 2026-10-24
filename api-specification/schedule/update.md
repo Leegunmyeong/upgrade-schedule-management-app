@@ -103,16 +103,6 @@ PATCH http://localhost:8080/schedules/1
 
 
 ## 에러 응답
-**잘못된 요청: 400 Bad Request**
-
-수정할 값이 없거나 입력값이 비어 있는 경우입니다.
-
-```json
-{
-  "message": "invalid schedule request",
-  "status": 400
-}
-```
 
 **자원 없음: 404 Not Found**
 
@@ -120,7 +110,6 @@ PATCH http://localhost:8080/schedules/1
 
 ```json
 {
-  "message": "schedule not found",
-  "status": 404
+  "message": "없는 일정 입니다."
 }
 ```
