@@ -1,7 +1,6 @@
 package com.upgradedschedulemanagementapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
