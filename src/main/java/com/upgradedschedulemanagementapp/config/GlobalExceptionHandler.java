@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleServiceException(ServiceException ex) {
 
         // 2. 예외를 저장된 상태 코드와 메세지를 클라이언트에게 변환
-        ResponseEntity response = new ResponseEntity<>(ex.getMessage(), ex.getStatus());
+        ResponseEntity<String> response = new ResponseEntity<>(ex.getMessage(), ex.getStatus());
         return response;
     }
 }
