@@ -70,14 +70,14 @@
 
 ## c. Response Body 명세
 
-| 이름      | 데이터 타입 | 설명                        |
-|-----------|-------------|-----------------------------|
-| id        | Long        | 일정 식별자                 |
-| name      | String      | 작성자 이름                 |
-| title     | String      | 일정 제목                   |
-| detail    | String      | 일정 내용                   |
-| createdAt | String      | 작성일(yyyy-mm-ddThh:mm:ss) |
-| updatedAt | String      | 수정일(yyyy-mm-ddThh:mm:ss) |
+| 이름      | 데이터 타입 | 설명                          |
+|-----------|-------------|-------------------------------|
+| id        | Long        | 일정 식별자                   |
+| name      | String      | 작성자 이름                   |
+| title     | String      | 일정 제목                     |
+| detail    | String      | 일정 내용                     |
+| createdAt | String      | 작성일(yyyy-MM-dd'T'HH:mm:ss) |
+| updatedAt | String      | 수정일(yyyy-MM-dd'T'HH:mm:ss) |
 
 
 ## 에러 응답
