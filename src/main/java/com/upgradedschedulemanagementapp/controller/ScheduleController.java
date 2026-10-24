@@ -4,6 +4,7 @@ import com.upgradedschedulemanagementapp.dto.GetOneScheduleResponseDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateRequestDto;
 import com.upgradedschedulemanagementapp.dto.ScheduleCreateResponseDto;
 import com.upgradedschedulemanagementapp.service.ScheduleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ScheduleController {
     // 일정 생성
     // 생성이기 때문에 @PostMapping 사용
     @PostMapping
-    public ResponseEntity<ScheduleCreateResponseDto> createdSchedule(@RequestBody ScheduleCreateRequestDto request) {
+    public ResponseEntity<ScheduleCreateResponseDto> createdSchedule(@Valid @RequestBody ScheduleCreateRequestDto request) {
         // 1. 클라이언트가 전달한 Request DTO를 Service에 전달
         // 2. Service가 반환한 Response DTO를 변수에 저장
         ScheduleCreateResponseDto responseDto = scheduleService.createdSchedule(request);
