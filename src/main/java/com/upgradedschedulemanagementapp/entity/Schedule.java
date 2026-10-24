@@ -35,5 +35,20 @@ public class Schedule extends BaseEntity {
         this.detail = detail;
     }
 
+    // 수정 기능
+    public void update(String title, String detail) {
+
+        // 1. 제목이 전달됐다면 제목 수정
+        if (title != null) {
+            this.title = title;
+        }
+
+        // 2. 내용이 전달됐다면 내용 수정
+        if (detail != null) {
+            this.detail = detail;
+        }
+
+
+    }
 
 }
