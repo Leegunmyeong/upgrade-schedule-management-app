@@ -102,6 +102,32 @@ public class ScheduleService {
     }
 
     // 일정 수정
+    @Transactional
+    public ScheduleUpdateResponseDto updatedSchedule(ScheduleUpdateRequestDto requestDto, Long id) {
+        // 1. scheduleId를 사용하여 기존 일정 조회
+        // 2. 일정이 없다면 ScheduleNotFoundException 발생
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(
+                () -> new ScheduleNotFoundException("없는 일정 입니다.")
+        );
+
+        // 3. Request DTO에서 수정할 제목과 내용 가져오기
+        String title = requestDto.getTitle();
+        String detail = requestDto.getDetail();
+
+        // 4. 전달된 값만 기존 Schedule Entity에 반영
+        schedule.update(title, detail);
+        // 5. 수정된 Schedule 정보로 Response DTO 생성
+        ScheduleUpdateResponseDto responseDto = new ScheduleUpdateResponseDto(
+                schedule.getId(),
+                schedule.getName(),
+                schedule.getTitle(),
+                schedule.getDetail(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt()
+        );
+        // 6. Controller에게 Response DTO 반환
+        return responseDto;
+    }
 
     // 일정 삭제
 }
