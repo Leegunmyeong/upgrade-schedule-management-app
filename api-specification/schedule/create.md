@@ -85,9 +85,4 @@
 
 필수 입력값이 누락되거나 비어 있는 경우입니다
 
-```json
-{
-  "message": "Bad Request",
-  "status": 400
-}
-```
+
