@@ -33,7 +33,8 @@ public class UserService {
         // 1. Request DTO의 이름과 이메일로 User 객체 생성
         User user = new User(
                 requestDto.getName(),
-                requestDto.getEmail()
+                requestDto.getEmail(),
+                requestDto.getPw()
         );
         // 2. Repository에 사용자 저장 요청
         // 3. 저장 결과를 User 타입 변수에 저장
