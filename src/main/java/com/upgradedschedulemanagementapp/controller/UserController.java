@@ -1,9 +1,6 @@
 package com.upgradedschedulemanagementapp.controller;
 
-import com.upgradedschedulemanagementapp.dto.GetOneUserResponseDto;
-import com.upgradedschedulemanagementapp.dto.UserCreateRequestDto;
-import com.upgradedschedulemanagementapp.dto.UserCreateResponseDto;
-import com.upgradedschedulemanagementapp.dto.UserListResponseDto;
+import com.upgradedschedulemanagementapp.dto.*;
 import com.upgradedschedulemanagementapp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +72,15 @@ public class UserController {
     }
 
     // 사용자 이메일 수정
+    @PatchMapping("/{userId}")
+    public ResponseEntity<UserUpdateResponseDto> updatedUser(@PathVariable Long userId, @Valid @RequestBody UserUpdateRequestDto requestDto) {
+        // 1. Service에 유저 수정 요청
+        UserUpdateResponseDto responseDto = userService.updatedUser(userId, requestDto);
+        // 2. 수정 결과와 HTTP 200 OK로 응답 생성
+        ResponseEntity<UserUpdateResponseDto> response = new ResponseEntity<>(responseDto, HttpStatus.OK);
+        // 3. 클라이언트에게 반환
+        return response;
+    }
 
 
     // 사용자 삭제
