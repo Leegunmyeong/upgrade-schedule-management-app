@@ -99,8 +99,32 @@ public class UserService {
         return responseDto;
     }
 
-
     // 유저 상세정보 수정
+    @Transactional
+    public UserUpdateResponseDto updatedUser(Long id, UserUpdateRequestDto requestDto) {
+        // 1. ID로 기존 유저 조회
+        // 2. 존재하지 않으면 404 예외 발생
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("없는 유저 입니다.")
+        );
+
+        // 3. Request DTO에 수정할 이메일 가져오기
+        String email = requestDto.getEmail();
+
+        // 4. User Entity의 이메일 변경
+        user.update(email);
+
+        // 5. 수정된 User의 정보를 응답 DTO로 변환
+        UserUpdateResponseDto responseDto = new UserUpdateResponseDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
+        // 6. Controller에 반환
+        return responseDto;
+    }
 
     // 유저 삭제
 }
