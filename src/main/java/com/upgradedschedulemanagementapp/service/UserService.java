@@ -1,9 +1,11 @@
 package com.upgradedschedulemanagementapp.service;
 
 
+import com.upgradedschedulemanagementapp.dto.GetOneUserResponseDto;
 import com.upgradedschedulemanagementapp.dto.UserCreateRequestDto;
 import com.upgradedschedulemanagementapp.dto.UserCreateResponseDto;
 import com.upgradedschedulemanagementapp.entity.User;
+import com.upgradedschedulemanagementapp.exception.UserNotFoundException;
 import com.upgradedschedulemanagementapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,26 @@ public class UserService {
     }
 
     // 단건 유저 조회
+    public GetOneUserResponseDto getOneUser(Long userId) {
+
+        // 1. 전달받은 userId를 이용해 DB에서 유저 조회
+        // 2. 유저가 존재하지 않으면 UserNotFoundException 발생
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("없는 유저 입니다.")
+        );
+        // 3. 조회한 User Entity의 정보를 응답 DTO에 담기
+        GetOneUserResponseDto responseDto = new GetOneUserResponseDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
+        // 4. Controller에게 응답 DTO 반환
+        return responseDto;
+    }
+
+
 
     // 모든 유저 조회
 
