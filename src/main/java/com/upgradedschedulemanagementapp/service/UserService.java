@@ -127,4 +127,16 @@ public class UserService {
     }
 
     // 유저 삭제
+    @Transactional
+    public void deletedUser(Long userId) {
+        // 1. userId를 사용해서 삭제할 유저 조회
+        // 2. 유저가 없으면 404 예외 발생
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("없는 유저 입니다.")
+        );
+        // 3. 조회한 User Entity 삭제
+        userRepository.delete(user);
+
+    }
+
 }
