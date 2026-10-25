@@ -1,15 +1,17 @@
 package com.upgradedschedulemanagementapp.service;
 
 
-import com.upgradedschedulemanagementapp.dto.GetOneUserResponseDto;
-import com.upgradedschedulemanagementapp.dto.UserCreateRequestDto;
-import com.upgradedschedulemanagementapp.dto.UserCreateResponseDto;
+import com.upgradedschedulemanagementapp.dto.*;
 import com.upgradedschedulemanagementapp.entity.User;
 import com.upgradedschedulemanagementapp.exception.UserNotFoundException;
 import com.upgradedschedulemanagementapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * [ UserService 역할 ]
@@ -49,6 +51,7 @@ public class UserService {
     }
 
     // 단건 유저 조회
+    @Transactional(readOnly = true)
     public GetOneUserResponseDto getOneUser(Long userId) {
 
         // 1. 전달받은 userId를 이용해 DB에서 유저 조회
@@ -68,9 +71,34 @@ public class UserService {
         return responseDto;
     }
 
-
-
     // 모든 유저 조회
+    @Transactional(readOnly = true)
+    public UserListResponseDto getAllUsers() {
+        // 1. 수정일 기준 내림차순으로 모든 유저 조회
+        // DB에서 조회한 Entity 목록
+        List<User> userList = userRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"));
+        // 2. 유저 정보를 담을 빈 DTO 리스트 생성
+        // 클라이언트에게 전달할 DTO 목록
+        List<UserDTO> userDtoList  = new ArrayList<>();
+        // 3. 조회한 User Entity를 하나씩 꺼냄
+        for (User user : userList) {
+            // 4. User Entity의 정보를 UserDto로 변환
+            UserDTO userDTO = new UserDTO(
+                    user.getId(),
+                    user.getName(),
+                    user.getEmail(),
+                    user.getCreatedAt(),
+                    user.getUpdatedAt()
+            );
+            // 5. 변환한 DTO를 UserDTO 타입의 객체를 담는 리스트에 추가
+            userDtoList.add(userDTO);
+        }
+        // 6. DTO 리스트를 전체 조회 응답 DTO에 저장
+        UserListResponseDto responseDto = new UserListResponseDto(userDtoList);
+        // 7. Controller에게 응답 DTO 반환
+        return responseDto;
+    }
+
 
     // 유저 상세정보 수정
 
