@@ -29,11 +29,15 @@ public class User extends BaseEntity{
     private String name; // 사용자 이름 / null 저장 불가
     @Column(unique = true, nullable = false)
     private String email; // 사용자 이메일 / 중복 값 불가 및 null 저장 불가
+    // DB에 null 저장 불가
+    @Column(nullable = false)
+    private String pw;
 
-    // 새로운 User 객체 생성 시 이름과 이메일 초기화
-    public User(String name, String email) {
+    // 새로운 User 객체 생성 시 이름, 이메일, 비밀번호로 User 객체 생성
+    public User(String name, String email, String pw) {
         this.name = name;
         this.email = email;
+        this.pw = pw;
     }
 
     // 유저 업데이트 기능
