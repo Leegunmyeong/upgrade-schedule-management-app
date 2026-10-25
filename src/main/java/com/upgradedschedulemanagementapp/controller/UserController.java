@@ -3,6 +3,7 @@ package com.upgradedschedulemanagementapp.controller;
 import com.upgradedschedulemanagementapp.dto.GetOneUserResponseDto;
 import com.upgradedschedulemanagementapp.dto.UserCreateRequestDto;
 import com.upgradedschedulemanagementapp.dto.UserCreateResponseDto;
+import com.upgradedschedulemanagementapp.dto.UserListResponseDto;
 import com.upgradedschedulemanagementapp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -58,10 +59,23 @@ public class UserController {
         // 4. 클라이언트에게 응답 반환
         return response;
     }
-    // 사용자 전체 조회
 
+    // 사용자 전체 조회
+    @GetMapping
+    public ResponseEntity<UserListResponseDto> getAllUsers() {
+
+        // 1. Service에게 모든 유저 조회 요청
+        // 2. 조회 결과를 응답 DTO로 받기
+        UserListResponseDto responseDto = userService.getAllUsers();
+
+        // 3. 조회 결과와 HTTP 200 OK로 응답 객체 생성
+        ResponseEntity<UserListResponseDto> response = new ResponseEntity<>(responseDto, HttpStatus.OK);
+        // 4. 클라이언트에게 응답 반환
+        return response;
+    }
 
     // 사용자 이메일 수정
+
 
     // 사용자 삭제
 }
