@@ -82,6 +82,16 @@ public class UserController {
         return response;
     }
 
-
     // 사용자 삭제
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deletedUser(@PathVariable Long userId) {
+        // 1. @PathVariable로 URL에서 삭제할 유저 ID를 가져옴
+        // 2. Service에 해당 ID 유저 삭제 요청
+        userService.deletedUser(userId);
+        // 3. HTTP 204 No Content 응답 생성
+        // Void는 응답 본문에 데이터를 담지 않는다는 의미
+        ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        // 4. 클라이언트에게 응답 반환
+        return response;
+    }
 }
