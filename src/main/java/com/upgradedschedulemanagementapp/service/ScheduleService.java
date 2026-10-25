@@ -2,8 +2,11 @@ package com.upgradedschedulemanagementapp.service;
 
 import com.upgradedschedulemanagementapp.dto.*;
 import com.upgradedschedulemanagementapp.entity.Schedule;
+import com.upgradedschedulemanagementapp.entity.User;
 import com.upgradedschedulemanagementapp.exception.ScheduleNotFoundException;
+import com.upgradedschedulemanagementapp.exception.UserNotFoundException;
 import com.upgradedschedulemanagementapp.repository.ScheduleRepository;
+import com.upgradedschedulemanagementapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,29 +19,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     // 일정 생성 기능
     @Transactional
     public ScheduleCreateResponseDto createdSchedule(ScheduleCreateRequestDto requestDto) {
-        // 1. Request DTO에 담긴 값으로 Schedule 객체 생성
+        // 1. Request DTO에서 유저 ID 가져오기
+        Long userId = requestDto.getUserId();
+
+        // 2. 유저 ID로 DB에서 User 조회
+        // 유저가 없다면 404 예외 발생
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("없는 유저 입니다.")
+        );
+
+        // 3. 조회한 User 객체로 Schedule 생성
         Schedule schedule = new Schedule(
-                requestDto.getName(),
+                user,
                 requestDto.getTitle(),
                 requestDto.getDetail()
         );
-        // 2. Repository에 Schedule 객체 저장 요청
-        // save()의 반환 타입도 Schedule이므로 Schedule 변수로 받음
+        // 4. Repository에 일정 저장
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        // 3. 저장한 Schedule 객체에서 필요한 값을 꺼내 Response DTO 생성
+        // 5. 저장된 일정으로 Response DTO 생성
+        // 기존 명세서 처럼
         ScheduleCreateResponseDto responseDto = new ScheduleCreateResponseDto(
                 savedSchedule.getId(),
-                savedSchedule.getName(),
+                savedSchedule.getUser().getName(),
                 savedSchedule.getTitle(),
                 savedSchedule.getDetail(),
                 savedSchedule.getCreatedAt(),
                 savedSchedule.getUpdatedAt()
         );
-        // 4. 생성한 Response DTO를 Controller에 반환
+        // 6. 생성한 Response DTO를 Controller에 반환
         return responseDto;
     }
 
@@ -55,7 +68,7 @@ public class ScheduleService {
         // 2. 조회된 Schedule Entity에서 필요한 값을 가져와 Response DTO 생성
         GetOneScheduleResponseDto responseDto = new GetOneScheduleResponseDto(
                 schedule.getId(),
-                schedule.getName(),
+                schedule.getUser().getName(),
                 schedule.getTitle(),
                 schedule.getDetail(),
                 schedule.getCreatedAt(),
@@ -86,7 +99,7 @@ public class ScheduleService {
             // 4. Schedule Entity의 정보를 ScheduleDTO에 담기
             ScheduleDTO scheduleDTO = new ScheduleDTO(
                     schedule.getId(),
-                    schedule.getName(),
+                    schedule.getUser().getName(),
                     schedule.getTitle(),
                     schedule.getDetail(),
                     schedule.getCreatedAt(),
@@ -119,7 +132,7 @@ public class ScheduleService {
         // 5. 수정된 Schedule 정보로 Response DTO 생성
         ScheduleUpdateResponseDto responseDto = new ScheduleUpdateResponseDto(
                 schedule.getId(),
-                schedule.getName(),
+                schedule.getUser().getName(),
                 schedule.getTitle(),
                 schedule.getDetail(),
                 schedule.getCreatedAt(),
