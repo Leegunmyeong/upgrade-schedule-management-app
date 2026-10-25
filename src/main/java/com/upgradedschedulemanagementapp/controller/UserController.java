@@ -1,5 +1,6 @@
 package com.upgradedschedulemanagementapp.controller;
 
+import com.upgradedschedulemanagementapp.dto.GetOneUserResponseDto;
 import com.upgradedschedulemanagementapp.dto.UserCreateRequestDto;
 import com.upgradedschedulemanagementapp.dto.UserCreateResponseDto;
 import com.upgradedschedulemanagementapp.service.UserService;
@@ -47,8 +48,18 @@ public class UserController {
     }
 
     // 사용자 단건 조회
-
+    @GetMapping("/{userId}")
+    public ResponseEntity<GetOneUserResponseDto> getOneUser(@PathVariable Long userId) {
+        // 1. URL에서 userId 값을 가져옴
+        // 2. Service에 유저 ID를 전달하여 조회 요청
+        GetOneUserResponseDto responseDto = userService.getOneUser(userId);
+        // 3. 조회한 DTO와 HTTP 200 OK로 응답 객체 생성
+        ResponseEntity<GetOneUserResponseDto> response = new ResponseEntity<>(responseDto, HttpStatus.OK);
+        // 4. 클라이언트에게 응답 반환
+        return response;
+    }
     // 사용자 전체 조회
+
 
     // 사용자 이메일 수정
 
