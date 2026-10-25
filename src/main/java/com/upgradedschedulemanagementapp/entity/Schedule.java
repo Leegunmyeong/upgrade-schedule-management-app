@@ -18,8 +18,11 @@ public class Schedule extends BaseEntity {
     private Long id;
 
     // 2. 작성 유저명
-    @Column(nullable = false)
-    private String name;
+    // 여러 일정이 하나의 User를 참조할 수 있음
+    @ManyToOne(fetch = FetchType.LAZY)
+    // schedules 테이블의 user_id가 users 테이블의 id를 참조
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     // 3. 할일 제목
     @Column(nullable = false)
@@ -29,8 +32,8 @@ public class Schedule extends BaseEntity {
     @Column(nullable = false)
     private String detail;
 
-    public Schedule(String name, String title, String detail) {
-        this.name = name;
+    public Schedule(User user, String title, String detail) {
+        this.user = user;
         this.title = title;
         this.detail = detail;
     }
