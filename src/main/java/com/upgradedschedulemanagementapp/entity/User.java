@@ -36,4 +36,9 @@ public class User extends BaseEntity{
         this.email = email;
     }
 
+    // 유저 업데이트 기능
+    public void update(String email) {
+        this.email = email;
+    }
+
 }
